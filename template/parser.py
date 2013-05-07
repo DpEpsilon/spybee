@@ -2,7 +2,7 @@ import node
 
 structure_types = ['%', '!', '*']
 
-TEMPLATES_DIR == './templates'
+TEMPLATES_DIR = './templates'
 
 def tokenize(text):
 	tokens = []
@@ -33,14 +33,17 @@ def tokenize(text):
 				end += 2
 			else:
 				end += 1
-
+	if structure:
+		tokens.append((True, text[start:]))
+	else:
+		tokens.append((False, text[start:]))
 	return tokens
 	
 class Template(node.Node):
 	def __init__(self, template_text):
 		self.tokens = tokenize(template_text)
 		self.upto = 0
-
+		print template_text, self.tokens
 		self.tree = self._base()
 		if not self.end():
 			raise Exception("Template appears to be invalid.")
@@ -158,20 +161,3 @@ class Template(node.Node):
 			return cur_node
 		else:
 			return None
-
-test = '''
-{% if yes %}
-{! 9 + 2 + cats !}
-{% else %}
-No
-{% end if %}
-{* this shouldn't occur *}
-{% for i in meow %}
-{% safe i %}
-{% empty %}
-NOWAI
-{% end for %}
-'''
-
-temp = Template(test)
-print temp.eval({'yes': True, 'cats': -1, 'meow': ['<>']})
