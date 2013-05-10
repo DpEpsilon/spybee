@@ -1,6 +1,6 @@
 import parser
 
-TEMPLATES_DIR == './templates'
+TEMPLATES_DIR = './templates'
 
 def render(filename, context):
 	"""
