@@ -34,13 +34,18 @@ def favicon():
 def index():
 	return template.render("index.html", {'pages': pages, 'page': pages[0]})
 
-@route('/blog/posts/<post>')
-def blog_post(post):
+@route('/blog/posts/<post_name>')
+def blog_post(post_name):
 	try:
-		return markdown(open(POSTS_DIR + '/' + post + '.md').read())
+		post = json.load(open(POSTS_DIR + '/' + post_name + '.json'))
+		post['date'] = format_date(post['timestamp'])
+		post['title'] = post_name
+		post['body'] = markdown(open(POSTS_DIR + '/' + post_name + '.md').read())
+		return template.render("blog.html", {'posts': [post],
+											 'pages': pages,
+											 'page': pages[2]})
 	except IOError:
 		abort(404)
-
 
 @route('/blog/<page:re:[0-9]*>')
 def blog_page(page):
