@@ -95,7 +95,7 @@ class Template(node.Node):
 				return self._for()
 			elif instruction == 'include':
 				self.next()
-				return Template(open(TEMPLATES_PATH + '/' +
+				return Template(open(TEMPLATES_DIR + '/' +
 									 token.split()[2]).read())
 			elif instruction == 'safe':
 				self.next()
