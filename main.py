@@ -83,7 +83,7 @@ months = ['January', 'Februrary', 'March',
 		  'July', 'August', 'September',
 		  'October', 'November', 'December']
 def format_date(timestamp):
-	time_object = time.localtime(time.time())
+	time_object = time.localtime(timestamp)
 	return months[time_object.tm_mon - 1] + " " + \
 		str(time_object.tm_mday) + ", " + str(time_object.tm_year)
 
