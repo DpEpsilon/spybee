@@ -46,10 +46,16 @@
     </div>
 
     <div class="container">
-	  
-	  
-	  
+	  {% for p in posts %}
+	  <div>
+	  {% safe p %}
+	  </div>
+	  <small><i>Posted on &lt;date&gt;</i></small>
 	  <hr>
+	  {% empty %}
+	  No posts have been made yet, apparently.
+	  <hr>
+	  {% end for %}
 	  
 	  {*
       <footer class="footer">

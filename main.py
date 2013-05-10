@@ -1,6 +1,10 @@
 import template
 from markdown import markdown
-from bottle import route, run, static_file, error
+from bottle import route, run, static_file, error, abort, redirect
+
+import os
+
+POSTS_DIR = './posts'
 
 class Page(object):
 	def __init__(self, url, title):
@@ -30,7 +34,26 @@ def index():
 
 @route('/blog/<post>')
 def blog_post(post):
-	return markdown(open('./posts/' + post + '.md').read())
+	try:
+		return markdown(open(POSTS_DIR + '/' + post + '.md').read())
+	except IOError:
+		abort(404)
+
+
+@route('/blog/')
+def blog_index_redir():
+    redirect("/blog")
+		
+@route('/blog')
+def blog_index():
+	posts_folder = os.listdir(POSTS_DIR)
+	posts = []
+	for filename in posts_folder:
+		if filename[-3:] == '.md':
+			posts.append(markdown(open(POSTS_DIR + '/' + filename).read()))
+	return template.render("blog.html", {'posts': posts,
+										 'pages': pages,
+										 'page': pages[2]})
 
 @error(404)
 def error404(error):
