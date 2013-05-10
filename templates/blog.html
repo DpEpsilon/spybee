@@ -27,7 +27,9 @@
 	  <div>
 	  {% safe p['body'] %}
 	  </div>
-	  <small><i>Posted on {! p['date'] !}.</i></small>
+	  <a href="/blog/posts/{! p['title'] !}" title="{! p['title'] !}">
+		<small> {! p['title'] !} - <i>Posted on {! p['date'] !}.</i></small>
+	  </a>
 	  <hr>
 	  {% empty %}
 	  No posts on this page, sorry.
