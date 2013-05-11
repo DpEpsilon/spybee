@@ -14,7 +14,6 @@ class Page(object):
 		self.title = title
 pages = [
 	Page('/', 'Home'),
-	Page('/blah', 'Stuff'),
 	Page('/blog', 'Blog')
 	]
 
