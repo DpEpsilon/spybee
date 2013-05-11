@@ -51,16 +51,18 @@ def blog_post(post_name):
 def blog_page(page):
 	page_num = int(page)
 	posts_folder = filter(lambda x: x[-5:] == '.json', os.listdir(POSTS_DIR))
-	posts_folder = posts_folder[page_num*10:(page_num+1)*10]
 	posts = []
 	for filename in posts_folder:
 		post = json.load(open(POSTS_DIR + '/' + filename))
 		post['date'] = format_date(post['timestamp'])
 		post['title'] = filename[:-5]
-		post['body'] = markdown(open(POSTS_DIR + '/' + filename[:-5] + '.md').read())
+		post['text_location'] = POSTS_DIR + '/' + filename[:-5] + '.md'
 		posts.append(post)
 	# equality is unlikely
 	posts.sort(cmp=lambda a,b: -1 if a['timestamp'] > b['timestamp'] else 1)
+	posts = posts[page_num*10:(page_num+1)*10]
+	for i in xrange(len(posts)):
+		posts[i]['body'] = markdown(open(posts[i]['text_location']).read())
 	return template.render("blog.html", {'posts': posts,
 										 'pages': pages,
 										 'page': pages[2]})
