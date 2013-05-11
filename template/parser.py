@@ -43,7 +43,6 @@ class Template(node.Node):
 	def __init__(self, template_text):
 		self.tokens = tokenize(template_text)
 		self.upto = 0
-		print template_text, self.tokens
 		self.tree = self._base()
 		if not self.end():
 			raise Exception("Template appears to be invalid.")
