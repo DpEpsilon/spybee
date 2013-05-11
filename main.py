@@ -42,7 +42,7 @@ def blog_post(post_name):
 		post['body'] = markdown(open(POSTS_DIR + '/' + post_name + '.md').read())
 		return template.render("blog.html", {'posts': [post],
 											 'pages': pages,
-											 'page': pages[2]})
+											 'page': pages[1]})
 	except IOError:
 		abort(404)
 
@@ -64,7 +64,7 @@ def blog_page(page):
 		posts[i]['body'] = markdown(open(posts[i]['text_location']).read())
 	return template.render("blog.html", {'posts': posts,
 										 'pages': pages,
-										 'page': pages[2]})
+										 'page': pages[1]})
 
 @route('/blog/')
 def blog_index_redir():
