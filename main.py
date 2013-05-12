@@ -46,11 +46,10 @@ def blog_post(post_name):
 	except IOError:
 		abort(404)
 
-@route('/blog/<page:re:[0-9]*>')
-def blog_page(page):
+@route('/blog/<page_num:int>')
+def blog_page(page_num):
 	if page == "":
 		redirect("/blog")
-	page_num = int(page)
 	posts_folder = filter(lambda x: x[-5:] == '.json', os.listdir(POSTS_DIR))
 	posts = []
 	for filename in posts_folder:
