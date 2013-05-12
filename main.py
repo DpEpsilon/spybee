@@ -48,6 +48,8 @@ def blog_post(post_name):
 
 @route('/blog/<page:re:[0-9]*>')
 def blog_page(page):
+	if page == "":
+		redirect("/blog")
 	page_num = int(page)
 	posts_folder = filter(lambda x: x[-5:] == '.json', os.listdir(POSTS_DIR))
 	posts = []
@@ -66,10 +68,10 @@ def blog_page(page):
 										 'pages': pages,
 										 'page': pages[1]})
 
-@route('/blog/')
-def blog_index_redir():
-	redirect("/blog")
-		
+@route('/<something:path>/')
+def slash_redir(something):
+	redirect("/" + something)
+	
 @route('/blog')
 def blog_index():
 	return blog_page(0)
