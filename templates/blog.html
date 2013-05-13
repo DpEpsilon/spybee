@@ -23,6 +23,15 @@
     </div>
 
     <div class="container">
+	  <p>
+	  {% if prev is not None %}
+	  <a style="float:left" href="/blog{! prev !}">&lt; Previous</a>
+	  {% end if %}
+	  {% if next is not None %}
+	  <a style="float:right" href="/blog{! next !}">Next &gt;</a>
+	  {% end if %}
+	  </p>
+	  <br>
 	  {% for p in posts %}
 	  <div>
 	  {% safe p['body'] %}
@@ -36,12 +45,16 @@
 	  <hr>
 	  {% end for %}
 
+	  <br>
+	  <p>
 	  {% if prev is not None %}
 	  <a style="float:left" href="/blog{! prev !}">&lt; Previous</a>
 	  {% end if %}
 	  {% if next is not None %}
 	  <a style="float:right" href="/blog{! next !}">Next &gt;</a>
 	  {% end if %}
+	  </p>
+	  <br>
 	  
 	  {*
       <footer class="footer">
