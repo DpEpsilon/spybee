@@ -115,7 +115,7 @@ class Template(node.Node):
 		if self.peek()[1].split()[1] != 'if':
 			return None
 		
-		expression = ''.join(self.peek()[1].split()[2:-1])
+		expression = ' '.join(self.peek()[1].split()[2:-1])
 		self.next()
 		true_node = self._base()
 		false_node = None
