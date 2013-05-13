@@ -42,14 +42,14 @@ def blog_post(post_name):
 		post['body'] = markdown(open(POSTS_DIR + '/' + post_name + '.md').read())
 		return template.render("blog.html", {'posts': [post],
 											 'pages': pages,
-											 'page': pages[1]})
+											 'page': pages[1],
+											 'next': None,
+											 'prev': None})
 	except IOError:
 		abort(404)
 
 @route('/blog/<page_num:int>')
 def blog_page(page_num):
-	if page == "":
-		redirect("/blog")
 	posts_folder = filter(lambda x: x[-5:] == '.json', os.listdir(POSTS_DIR))
 	posts = []
 	for filename in posts_folder:
@@ -65,7 +65,10 @@ def blog_page(page_num):
 		posts[i]['body'] = markdown(open(posts[i]['text_location']).read())
 	return template.render("blog.html", {'posts': posts,
 										 'pages': pages,
-										 'page': pages[1]})
+										 'page': pages[1],
+										 'next': '/' + str(page_num+1),
+										 'prev': ('/' + str(page_num-1))
+										 if page_num > 0 else None})
 
 @route('/<something:path>/')
 def slash_redir(something):

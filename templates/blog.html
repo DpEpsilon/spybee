@@ -35,6 +35,13 @@
 	  No posts on this page, sorry.
 	  <hr>
 	  {% end for %}
+
+	  {% if prev is not None %}
+	  <a style="float:left" href="/blog{! prev !}">&lt; Previous</a>
+	  {% end if %}
+	  {% if next is not None %}
+	  <a style="float:right" href="/blog{! next !}">Next &gt;</a>
+	  {% end if %}
 	  
 	  {*
       <footer class="footer">
