@@ -7,7 +7,7 @@ a '<name>.md' file. The json file needs to have a 'timestamp' (which is a unix
 timetstamp) and optionally, a list of 'tags'. Tags currently serve no purpose,
 but in the future, they may be used for bucketing posts together.
 
-Depends on python-markdown and python-json.
+Depends on python-argparse, python-markdown and python-json.
 
    Copyright Ⓒ 2013 Daniel Phillips
 
