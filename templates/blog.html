@@ -2,26 +2,9 @@
 <html lang="en">
   {% include head.html %}
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">DpEpsilon</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-			  {% for p in pages %}
-              <li{% if p == page %} class="active"{% end if %}><a href="{% safe p.url %}">{! p.title !}</a></li>
-              {% end for %}
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
 
+	{% include navbar.html %}
+	
     <div class="container">
 	  <p>
 	  {% if prev is not None %}
