@@ -100,7 +100,7 @@ if __name__ == '__main__':
 							const=True, default=False,
 							help="Turns on traceback on 500 errors and\n"
 							"sets host to 'localhost'")
-	arg_parser.add_argument("-p", "--port", default=8080, nargs='?',
+	arg_parser.add_argument("-p", "--port", default="8080", nargs='?',
 							help="Port for server to listen on "
 							"(default: 8080).")
 	args = arg_parser.parse_args().__dict__
