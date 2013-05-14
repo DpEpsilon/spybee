@@ -1,6 +1,7 @@
 import template
 import json
 import time
+import argparse
 from markdown import markdown
 from bottle import route, run, static_file, error, abort, redirect
 
@@ -93,4 +94,20 @@ def format_date(timestamp):
 		str(time_object.tm_mday) + ", " + str(time_object.tm_year)
 
 if __name__ == '__main__':
-	run(host='localhost', port=8080, debug=True)
+	arg_parser = argparse.ArgumentParser(
+		description="Runs the spybee server.")
+	arg_parser.add_argument("-d", "--debug", action="store_const",
+							const=True, default=False,
+							help="Turns on traceback on 500 errors and\n"
+							"sets host to 'localhost'")
+	arg_parser.add_argument("-p", "--port", default=8080, nargs='?',
+							help="Port for server to listen on "
+							"(default: 8080).")
+	args = arg_parser.parse_args().__dict__
+	
+	if not args['port'].isdigit():
+		arg_parser.print_usage()
+		print "error: port must be a decimal integer"
+	else:
+		run(host='localhost' if args['debug'] else '0.0.0.0',
+			port=args['port'], debug=args['debug'])
