@@ -1,5 +1,5 @@
 Simple PYthon Blogging EnginE
-Uses the bottle.py web framework.
+Built on the bottle.py web framework.
 
 Blog posts are placed in the 'posts' folder and are written in markdown.
 For a blog post to be displayed, there needs to be a '<name>.json' file and
@@ -7,7 +7,15 @@ a '<name>.md' file. The json file needs to have a 'timestamp' (which is a unix
 timetstamp) and optionally, a list of 'tags'. Tags currently serve no purpose,
 but in the future, they may be used for bucketing posts together.
 
+Future plans:
+- Title and front page customization
+- Tag filtering
+- RSS
+
 Depends on python-argparse, python-markdown and python-json.
+
+Run with 'python main.py'. Use '-p' to specify port and '-d' to turn on
+debug mode.
 
    Copyright Ⓒ 2013 Daniel Phillips
 
