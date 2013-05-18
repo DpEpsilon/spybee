@@ -12,6 +12,13 @@ a '<name>.md' file. The json file needs to have a 'timestamp' (which is a unix
 timetstamp) and optionally, a list of 'tags'. Tags currently serve no purpose,
 but in the future, they may be used for bucketing posts together.
 
+Customization
+-------------
+
+You can change what the homepage says by editing home.md. If this file does
+not exist or markdown causes an error for whatever reason, nothing will be
+shown on the homepage.
+
 Dependencies
 ------------
 
@@ -25,7 +32,7 @@ debug mode.
 
 Future plans
 ------------
-- Title and front page customization
+- Title and footer customization
 - Tag filtering
 - RSS
 

@@ -8,6 +8,7 @@ from bottle import route, run, static_file, error, abort, redirect
 import os
 
 POSTS_DIR = './posts'
+HOME_MESSAGE = './home.md'
 
 class Page(object):
 	def __init__(self, url, title):
@@ -32,7 +33,15 @@ def favicon():
 
 @route('/')
 def index():
-	return template.render("index.html", {'pages': pages, 'page': pages[0]})
+	try:
+		return template.render("index.html",
+							   {'home_message':
+									markdown(open(HOME_MESSAGE).read()),
+								'pages': pages, 'page': pages[0]})
+	except:
+		return template.render("index.html",
+							   {'home_message': "",
+								'pages': pages, 'page': pages[0]})
 
 @route('/blog/posts/<post_name>')
 def blog_post(post_name):
