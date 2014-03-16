@@ -4,14 +4,14 @@
   <body>
 
 	{% include navbar.html %}
-	
+
     <div class="container">
 	  <p>
 	  {% if prev is not None %}
-	  <a style="float:left" href="{! prev !}">&lt; Previous</a>
+	  <a style="float:left" href="{! prev !}{! tags !}">&lt; Previous</a>
 	  {% end if %}
 	  {% if next is not None %}
-	  <a style="float:right" href="{! next !}">Next &gt;</a>
+	  <a style="float:right" href="{! next !}{! tags !}">Next &gt;</a>
 	  {% end if %}
 	  </p>
 	  <br>
@@ -19,8 +19,18 @@
 	  <div>
 	  {% safe p['body'] %}
 	  </div>
-	  <a href="/post/{! p['title'] !}" title="{! p['title'] !}">
-		<small> {! p['title'] !} - <i>Posted on {! p['date'] !}.</i></small>
+	  <small>
+		<a href="/post/{! p['title'] !}" title="{! p['title'] !}">
+		  {! p['title'] !}
+		</a>
+		-
+		<i>Posted on {! p['date'] !}.
+		  Tagged as
+		  {% for tag in p['tags'] %}
+		  <a href="/?tags={! tag !}">{! tag !}</a>
+		  {% end for %}
+		</i>
+	  </small>
 	  </a>
 	  <hr>
 	  {% empty %}
@@ -31,10 +41,10 @@
 	  <br>
 	  <p>
 	  {% if prev is not None %}
-	  <a style="float:left" href="{! prev !}">&lt; Previous</a>
+	  <a style="float:left" href="{! prev !}{! tags !}">&lt; Previous</a>
 	  {% end if %}
 	  {% if next is not None %}
-	  <a style="float:right" href="{! next !}">Next &gt;</a>
+	  <a style="float:right" href="{! next !}{! tags !}">Next &gt;</a>
 	  {% end if %}
 	  </p>
 	  <br>

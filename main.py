@@ -42,6 +42,8 @@ def blog_page(page_num):
     return template.render("blog.html", {'posts': posts,
                                          'pages': pages,
                                          'page': pages[0] if page_num == 0 else None,
+                                         'tags': "?tags=" + '+'.join(tags.split())
+                                         if tags is not None else "",
                                          'next': '/' + str(page_num+1),
                                          'prev': ('/' + str(page_num-1))
                                          if page_num > 0 else None})
@@ -56,6 +58,7 @@ def blog_post(post_name):
         return template.render("blog.html", {'posts': [post],
                                              'pages': pages,
                                              'page': None,
+                                             'tags': "",
                                              'next': None,
                                              'prev': None})
     except IOError:
