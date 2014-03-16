@@ -15,50 +15,14 @@ class Page(object):
         self.url = url
         self.title = title
 pages = [
-    Page('/', 'Home'),
-    Page('/blog', 'Blog')
+    Page('/', 'Home')
     ]
 
-@route('/css/<filename:re:.*\\.css>')
-def serve_css(filename):
-    return static_file(filename, root='./css', mimetype='text/css')
-
-@route('/css/<filename:re:.*\\.js>')
-def serve_js(filename):
-    return static_file(filename, root='./js', mimetype='application/javascript')
-
-@route('/favicon.ico')
-def favicon():
-    return static_file('favicon.ico', root='./', mimetype='image/x-icon')
-
 @route('/')
-def index():
-    try:
-        return template.render("index.html",
-                               {'home_message':
-                                    markdown(open(HOME_MESSAGE).read()),
-                                'pages': pages, 'page': pages[0]})
-    except:
-        return template.render("index.html",
-                               {'home_message': "",
-                                'pages': pages, 'page': pages[0]})
+def blog_index():
+    return blog_page(0)
 
-@route('/blog/posts/<post_name>')
-def blog_post(post_name):
-    try:
-        post = json.load(open(POSTS_DIR + '/' + post_name + '.json'))
-        post['date'] = format_date(post['timestamp'])
-        post['title'] = post_name
-        post['body'] = markdown(open(POSTS_DIR + '/' + post_name + '.md').read())
-        return template.render("blog.html", {'posts': [post],
-                                             'pages': pages,
-                                             'page': pages[1],
-                                             'next': None,
-                                             'prev': None})
-    except IOError:
-        abort(404)
-
-@route('/blog/<page_num:int>')
+@route('/<page_num:int>')
 def blog_page(page_num):
     posts_folder = filter(lambda x: x[-5:] == '.json', os.listdir(POSTS_DIR))
     posts = []
@@ -75,18 +39,41 @@ def blog_page(page_num):
         posts[i]['body'] = markdown(open(posts[i]['text_location']).read())
     return template.render("blog.html", {'posts': posts,
                                          'pages': pages,
-                                         'page': pages[1],
+                                         'page': pages[0] if page_num == 0 else None,
                                          'next': '/' + str(page_num+1),
                                          'prev': ('/' + str(page_num-1))
                                          if page_num > 0 else None})
+    
+@route('/post/<post_name>')
+def blog_post(post_name):
+    try:
+        post = json.load(open(POSTS_DIR + '/' + post_name + '.json'))
+        post['date'] = format_date(post['timestamp'])
+        post['title'] = post_name
+        post['body'] = markdown(open(POSTS_DIR + '/' + post_name + '.md').read())
+        return template.render("blog.html", {'posts': [post],
+                                             'pages': pages,
+                                             'page': pages[1],
+                                             'next': None,
+                                             'prev': None})
+    except IOError:
+        abort(404)
 
 @route('/<something:path>/')
 def slash_redir(something):
     redirect("/" + something)
-    
-@route('/blog')
-def blog_index():
-    return blog_page(0)
+
+@route('/css/<filename:re:.*\\.css>')
+def serve_css(filename):
+    return static_file(filename, root='./css', mimetype='text/css')
+
+@route('/css/<filename:re:.*\\.js>')
+def serve_js(filename):
+    return static_file(filename, root='./js', mimetype='application/javascript')
+
+@route('/favicon.ico')
+def favicon():
+    return static_file('favicon.ico', root='./', mimetype='image/x-icon')
 
 @error(404)
 def error404(error):
