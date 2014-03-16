@@ -22,7 +22,10 @@ shown on the homepage.
 Dependencies
 ------------
 
-Depends on python-argparse, python-markdown and python-json.
+Depends on python-argparse, python-markdown and python-json. By
+default, spybee also uses python-paste as an alternate webserver so
+that multi-threading is possible, but this isn't hard to change using
+bottle.
 
 Running
 -------

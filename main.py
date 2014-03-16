@@ -119,4 +119,5 @@ if __name__ == '__main__':
 		print "error: port must be a decimal integer"
 	else:
 		run(host='localhost' if args['debug'] else '0.0.0.0',
-			port=args['port'], debug=args['debug'])
+			port=args['port'], debug=args['debug'],
+		        server='paste')
