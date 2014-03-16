@@ -55,7 +55,7 @@ def blog_post(post_name):
         post['body'] = markdown(open(POSTS_DIR + '/' + post_name + '.md').read())
         return template.render("blog.html", {'posts': [post],
                                              'pages': pages,
-                                             'page': pages[1],
+                                             'page': None,
                                              'next': None,
                                              'prev': None})
     except IOError:
