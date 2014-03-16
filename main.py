@@ -3,7 +3,7 @@ import json
 import time
 import argparse
 from markdown import markdown
-from bottle import route, run, static_file, error, abort, redirect
+from bottle import route, run, static_file, error, abort, redirect, request
 
 import os
 
@@ -26,12 +26,14 @@ def blog_index():
 def blog_page(page_num):
     posts_folder = filter(lambda x: x[-5:] == '.json', os.listdir(POSTS_DIR))
     posts = []
+    tags = request.query.get('tags')
     for filename in posts_folder:
         post = json.load(open(POSTS_DIR + '/' + filename))
         post['date'] = format_date(post['timestamp'])
         post['title'] = filename[:-5]
         post['text_location'] = POSTS_DIR + '/' + filename[:-5] + '.md'
-        posts.append(post)
+        if tags is None or set(post['tags']).issuperset(tags.split()):
+            posts.append(post)
     # equality is unlikely
     posts.sort(cmp=lambda a,b: -1 if a['timestamp'] > b['timestamp'] else 1)
     posts = posts[page_num*10:(page_num+1)*10]
