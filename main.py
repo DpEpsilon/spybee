@@ -2,6 +2,7 @@ import template
 import json
 import time
 import argparse
+import codecs
 from markdown import markdown
 from bottle import route, run, static_file, error, abort, redirect, request
 
@@ -38,7 +39,7 @@ def blog_page(page_num):
     posts.sort(cmp=lambda a,b: -1 if a['timestamp'] > b['timestamp'] else 1)
     posts = posts[page_num*10:(page_num+1)*10]
     for i in xrange(len(posts)):
-        posts[i]['body'] = markdown(open(posts[i]['text_location']).read())
+        posts[i]['body'] = markdown(codecs.open(posts[i]['text_location'], 'r', 'utf-8').read())
     return template.render("blog.html", {'posts': posts,
                                          'pages': pages,
                                          'page': pages[0] if page_num == 0 else None,
@@ -54,7 +55,7 @@ def blog_post(post_name):
         post = json.load(open(POSTS_DIR + '/' + post_name + '.json'))
         post['date'] = format_date(post['timestamp'])
         post['title'] = post_name
-        post['body'] = markdown(open(POSTS_DIR + '/' + post_name + '.md').read())
+        post['body'] = markdown(codecs.open(POSTS_DIR + '/' + post_name + '.md', 'r', 'utf-8').read())
         return template.render("blog.html", {'posts': [post],
                                              'pages': pages,
                                              'page': None,
